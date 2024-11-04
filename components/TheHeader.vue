@@ -1,9 +1,76 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>
-    Component: TheHeader
+  <div class="header background">
+    <div class="header-main">
+      <div class="logo-box">
+        <ImageComponent url-path="header/logo" />
+      </div>
+
+      <div class="route-list">
+        <div
+          class="header-item"
+          v-for="(color, inx) in [
+            'header/red_item',
+            'header/orange_item',
+            'header/blue_item',
+            'header/green_item',
+          ]"
+        >
+          <ImageComponent :key="inx" :url-path="color" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+.background {
+  background-image: url("assets/images/header/header_bg.png");
+  @apply bg-cover;
+}
+
+/* Retina @2x */
+@media only screen and (min-resolution: 192dpi),
+  /* 支持dppx */ only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .background {
+    background-image: url("assets/images/header/header_bg@2x.png");
+  }
+}
+
+/* Retina @3x */
+@media only screen and (min-resolution: 288dpi),
+  /* 支持dppx */ only screen and (-webkit-min-device-pixel-ratio: 3) {
+  .background {
+    background-image: url("assets/images/header/header_bg@3x.png");
+  }
+}
+
+.header {
+  @apply h-36;
+
+  .header-main {
+    @apply w-10/12 mx-auto h-full;
+    @apply flex;
+
+    .logo-box {
+      @apply w-56 h-full;
+      @apply cursor-pointer;
+      @apply flex items-center justify-center;
+    }
+
+    .route-list {
+      @apply h-full w-full;
+      @apply flex items-center justify-center;
+
+      .header-item + .header-item {
+        @apply ml-8;
+      }
+      .header-item {
+        @apply cursor-pointer;
+        @apply w-40;
+      }
+    }
+  }
+}
+</style>
