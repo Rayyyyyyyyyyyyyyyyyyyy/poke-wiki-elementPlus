@@ -67,7 +67,7 @@ if (process.client) {
       <el-row>
         <el-col :span="24">
           <ContainerItem item_title="全國圖鑑">
-            <el-row :gutter="20" class="card-list">
+            <el-row :gutter="12" class="card-list">
               <el-col :span="24 / state.colSpan" v-for="item in state.heroList">
                 <Card :poke_file="item"></Card>
               </el-col>

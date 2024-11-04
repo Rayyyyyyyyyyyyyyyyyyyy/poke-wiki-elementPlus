@@ -83,7 +83,7 @@ const transformTypeToColor = (type: string) => {
     @apply absolute;
     @apply w-40 h-40 object-cover;
     left: calc(50% - 80px);
-    top: -40px;
+    @apply bottom-10;
   }
   .poke-type {
     @apply flex items-center mb-1;
