@@ -1,77 +1,37 @@
 <script setup lang="ts">
 import { getPokeApi } from "~/servies/pokeApi";
 import { getPokeV2 } from "~/servies/pokeApi_V2";
-import { Search } from "@element-plus/icons-vue";
 import type { TPokeItem, TResponse } from "~/types/apiTypes";
 
 const state = reactive({
-  keyword: "",
   heroList: [] as TPokeItem[],
-  colSpan: 4,
 });
 
-const getPokeList = async () => {
-  const res = (await getPokeApi("list", {})) as TResponse<TPokeItem[]>;
-  state.heroList = res.data.slice(0, state.colSpan);
-};
+const res = (await getPokeApi("list", {})) as TResponse<TPokeItem[]>;
+state.heroList = res.data.slice(0, 9);
 
-const getScreenW = () => {
-  if (window.innerWidth > 1600) {
-    state.colSpan = 8;
-  } else {
-    if (window.innerWidth < 1440) {
-      if (window.innerWidth < 976) {
-        if (window.innerWidth < 768) {
-          if (window.innerWidth < 480) {
-            state.colSpan = 1;
-          } else {
-            state.colSpan = 2;
-          }
-        } else {
-          state.colSpan = 3;
-        }
-      } else {
-        state.colSpan = 4;
-      }
-    } else {
-      state.colSpan = 6;
-    }
-  }
-  getPokeList();
-};
-if (process.client) {
-  onMounted(() => {
-    getScreenW();
-    setTimeout(() => {
-      window.addEventListener("resize", getScreenW);
-    }, 300);
-  });
-}
-
-// const resV2 = await getPokeV2("pokemon/7", {});
+// const resMove = await getPokeApi("move", "list", {});
+// console.log("resMove", resMove);
+// const resV2 = await getPokeV2("move/5", {});
 // console.log("resV2", resV2);
 </script>
 
 <template>
   <div class="home-wrapper">
-    <div class="search-bar">
-      <el-input
-        class="search-input"
-        v-model="state.keyword"
-        placeholder="搜尋寶可夢"
-        :prefix-icon="Search"
-      />
-    </div>
+    <SearchBar />
 
     <div class="container-main">
       <el-row>
         <el-col :span="24">
           <ContainerItem item_title="全國圖鑑">
-            <el-row :gutter="12" class="card-list">
-              <el-col :span="24 / state.colSpan" v-for="item in state.heroList">
-                <Card :poke_file="item"></Card>
-              </el-col>
-            </el-row>
+            <div class="card-list">
+              <Card
+                class="poke-card-prop"
+                v-for="(item, inde) in state.heroList"
+                :key="inde"
+                :poke_file="item"
+              />
+            </div>
           </ContainerItem>
         </el-col>
       </el-row>
@@ -94,24 +54,40 @@ if (process.client) {
 
   .container-main {
     @apply mt-4;
-  }
-}
-.search-bar {
-  @apply w-full h-16;
-  @apply flex items-center justify-end;
 
-  .search-input {
-    @apply w-5/12 h-full;
+    .card-list {
+      @apply grid grid-rows-1 col-span-1 gap-6;
+      @apply sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 3xl:grid-cols-9;
 
-    ::v-deep() {
-      .el-input__wrapper {
-        @apply rounded-full px-6;
+      .poke-card-prop {
+        @apply hidden;
 
-        .el-input__prefix {
-          @apply text-2xl;
+        &:nth-child(1) {
+          @apply block;
         }
-        .el-input__inner {
-          @apply text-base;
+        &:nth-child(2) {
+          @apply sm:block;
+        }
+        &:nth-child(3) {
+          @apply md:block;
+        }
+        &:nth-child(4) {
+          @apply lg:block;
+        }
+        &:nth-child(5) {
+          @apply xl:block;
+        }
+        &:nth-child(6) {
+          @apply xl:block;
+        }
+        &:nth-child(7) {
+          @apply 2xl:block;
+        }
+        &:nth-child(8) {
+          @apply 2xl:block;
+        }
+        &:nth-child(9) {
+          @apply 3xl:block;
         }
       }
     }

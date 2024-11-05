@@ -17,7 +17,7 @@
   @apply overflow-x-auto overflow-y-auto;
 
   .main {
-    max-width: 1600px;
+    max-width: 1840px;
     @apply w-10/12 h-full mx-auto;
     @apply overflow-x-auto overflow-y-auto;
   }

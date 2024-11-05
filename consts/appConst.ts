@@ -38,3 +38,16 @@ export enum ETypeColor {
   dark = "#50413F",
   fairy = "#EF70EF",
 }
+
+export const areaNameList = [
+  "關都",
+  "城都",
+  "豐緣",
+  "神奧",
+  "合眾",
+  "卡洛斯",
+  "阿羅拉",
+  "伽勒爾",
+  "洗翠",
+  "帕底亞",
+];
