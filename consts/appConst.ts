@@ -51,3 +51,36 @@ export const areaNameList = [
   "洗翠",
   "帕底亞",
 ];
+
+export enum EAreaName {
+  "關都" = "kanto",
+  "城都" = "johto",
+  "豐緣" = "hoenn",
+  "神奧" = "sinnoh",
+  "合眾" = "unova",
+  "卡洛斯" = "kalos",
+  "阿羅拉" = "alola",
+  "伽勒爾" = "galar",
+  "洗翠" = "hisui",
+  "帕底亞" = "paldea",
+}
+export const typeList = [
+  "一般",
+  "火",
+  "水",
+  "格斗",
+  "飞行",
+  "毒",
+  "地面",
+  "岩石",
+  "虫",
+  "幽灵",
+  "钢",
+  "草",
+  "电",
+  "超能力",
+  "冰",
+  "龙",
+  "恶",
+  "妖精",
+];

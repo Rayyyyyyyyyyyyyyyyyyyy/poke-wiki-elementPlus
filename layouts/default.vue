@@ -18,8 +18,8 @@
 
   .main {
     max-width: 1840px;
-    @apply w-10/12 h-full mx-auto;
-    @apply overflow-x-auto overflow-y-auto;
+    height: calc(100% - 9rem);
+    @apply w-10/12  mx-auto;
   }
 }
 </style>

@@ -47,7 +47,8 @@
 }
 
 .header {
-  @apply h-36;
+  @apply h-full;
+  max-height: 148px;
 
   .header-main {
     @apply w-10/12 mx-auto h-full;

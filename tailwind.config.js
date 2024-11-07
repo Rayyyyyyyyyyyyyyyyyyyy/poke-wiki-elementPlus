@@ -12,9 +12,7 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#2980EF",
-          light: "#D9B391",
-          dark: "#262626",
+          DEFAULT: "#003A70",
         },
         secondary: {
           DEFAULT: "#A6A18A",
@@ -52,9 +50,12 @@ export default {
       },
     },
     screens: {
+      xxs: "330px",
+      xs: "370px",
       sm: "480px",
       md: "768px",
-      lg: "976px",
+      base: "976px",
+      lg: "1080px",
       xl: "1440px",
       "2xl": "1600px",
       "3xl": "1800px",

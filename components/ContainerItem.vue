@@ -31,7 +31,7 @@ const props = defineProps({
 
   .title {
     font-size: 28px;
-    @apply mr-1;
+    @apply mr-1 text-primary;
   }
 }
 </style>
