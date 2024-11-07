@@ -61,8 +61,9 @@
     }
 
     .route-list {
-      @apply h-full w-full;
-      @apply flex items-center justify-center;
+      @apply h-full w-full hidden;
+      @apply items-center justify-center;
+      @apply lg:flex;
 
       .header-item + .header-item {
         @apply ml-8;

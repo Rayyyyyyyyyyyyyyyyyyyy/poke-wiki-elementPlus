@@ -13,8 +13,8 @@ state.heroList = res.data.slice(0, 9);
 
 pokeStore.getPokeMoveList();
 
-const resV2 = await getPokeV2("region", {});
-console.log("resV2", resV2);
+// const resV2 = await getPokeV2("region", {});
+// console.log("resV2", resV2);
 
 // const resDetail = await getPokeApi("move/detail", { nameZh: "火" });
 // console.log("resDetail", resDetail);
