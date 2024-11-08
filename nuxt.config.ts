@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: false },
+  css: ["assets/scss/tailwind.scss"],
   modules: ["@nuxtjs/tailwindcss", "@element-plus/nuxt", "@pinia/nuxt"],
   tailwindcss: {
     // Options

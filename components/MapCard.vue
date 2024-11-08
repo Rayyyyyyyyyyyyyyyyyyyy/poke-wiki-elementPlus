@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { EAreaName, ETypeContext } from "~/consts/appConst";
+import { EAreaName } from "~/consts/appConst";
 import { AppUtils } from "#imports";
 
 const props = defineProps({

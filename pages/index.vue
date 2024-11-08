@@ -6,6 +6,9 @@ import { areaNameList } from "~/consts/appConst";
 
 const state = reactive({
   heroList: [] as TPokeItem[],
+  detailVisible: false,
+  pokeId: -1,
+  dataType: "",
 });
 const pokeStore = PokeStore();
 const res = (await getPokeApi("pokemon/list", {})) as TResponse<TPokeItem[]>;
@@ -13,11 +16,14 @@ state.heroList = res.data.slice(0, 9);
 
 pokeStore.getPokeMoveList();
 
-// const resV2 = await getPokeV2("region", {});
-// console.log("resV2", resV2);
-
 // const resDetail = await getPokeApi("move/detail", { nameZh: "火" });
 // console.log("resDetail", resDetail);
+
+const openDetail = (id: number) => {
+  state.pokeId = id;
+  state.dataType = "poke";
+  state.detailVisible = true;
+};
 </script>
 
 <template>
@@ -34,6 +40,7 @@ pokeStore.getPokeMoveList();
                 v-for="(item, inde) in state.heroList"
                 :key="inde"
                 :poke_file="item"
+                @click="openDetail(item.index)"
               />
             </div>
           </ContainerItem>
@@ -68,6 +75,12 @@ pokeStore.getPokeMoveList();
       </div>
     </div>
   </div>
+  <DetailDialog
+    :dialog_visible="state.detailVisible"
+    @dialogCloseEmit="state.detailVisible = false"
+    :poke_id="state.pokeId"
+    :dialog_type="state.dataType"
+  />
 </template>
 
 <style scoped lang="scss">

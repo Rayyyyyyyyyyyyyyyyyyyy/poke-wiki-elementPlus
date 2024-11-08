@@ -83,3 +83,62 @@ export type TPokeV2MoveType = {
     };
   };
 };
+
+export type TTextEntries = {
+  flavor_text: string;
+  language: TNameUrl;
+  version: TNameUrl;
+};
+
+export type TPokeSpacies = {
+  base_happiness: number;
+  capture_rate: number;
+  color: TNameUrl;
+  egg_groups: TNameUrl[];
+  evolution_chain: {
+    url: string;
+  };
+  evolves_from_species: TNameUrl;
+  flavor_text_entries: TTextEntries[];
+
+  form_descriptions: any[];
+  forms_switchable: boolean;
+  gender_rate: number;
+  genera: {
+    genus: string;
+    language: TNameUrl;
+  }[];
+
+  generation: TNameUrl;
+  growth_rate: TNameUrl;
+  habitat: TNameUrl;
+  has_gender_differences: boolean;
+  hatch_counter: number;
+  id: number;
+  is_baby: boolean;
+  is_legendary: boolean;
+  is_mythical: boolean;
+  name: string;
+  names: {
+    language: TNameUrl;
+    name: string;
+  }[];
+
+  order: number;
+  pal_park_encounters: {
+    area: TNameUrl;
+    base_score: number;
+    rate: number;
+  }[];
+
+  pokedex_numbers: {
+    entry_number: number;
+    pokedex: TNameUrl;
+  }[];
+
+  shape: TNameUrl;
+  varieties: {
+    is_default: boolean;
+    pokemon: TNameUrl;
+  }[];
+};

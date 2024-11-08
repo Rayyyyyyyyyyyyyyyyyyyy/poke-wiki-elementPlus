@@ -1,0 +1,16 @@
+
+
+.detail-dialog {
+  @apply p-0 #{!important};
+  @apply rounded-3xl #{!important};
+  @apply overflow-hidden  #{!important};
+
+  .el-dialog__header.show-close {
+    @apply p-0;
+
+    .el-dialog__close {
+      @apply text-white text-2xl;
+    }
+  }
+
+}

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { TPokeMove } from "~/types/apiTypes";
 import { ETypeColor, ETypeContext } from "~/consts/appConst";
+import appUtils from "~/utils/AppUtils";
 
 const props = defineProps({
   move_list: {
@@ -15,13 +16,13 @@ const moveList = computed(() => {
     return [] as TPokeMove[];
   }
 });
+
 const moveTypeZh = moveList.value[0].type as string;
-const moveTypeEn = ETypeContext[moveTypeZh as keyof typeof ETypeContext];
-const moveColor = ETypeColor[moveTypeEn];
+const { color, enName } = appUtils.transactionNameToColor(moveTypeZh);
 </script>
 
 <template>
-  <el-card class="type-card" :style="{ background: moveColor }" shadow="hover">
+  <el-card class="type-card" :style="{ background: color }" shadow="hover">
     <div class="move-list">
       <p
         class="move-name"
@@ -31,10 +32,11 @@ const moveColor = ETypeColor[moveTypeEn];
         {{ move.nameZh }}
       </p>
     </div>
-    <el-tag class="type-tag">
-      <ImageComponent :url-path="`type/Icon_${moveTypeEn}`" />
-      {{ moveTypeZh }}
-    </el-tag>
+    <TagComponent
+      class="type-tag-prop"
+      :en_name="enName"
+      :zh_name="moveTypeZh"
+    ></TagComponent>
   </el-card>
 </template>
 
@@ -63,20 +65,9 @@ const moveColor = ETypeColor[moveTypeEn];
       @apply text-white cursor-pointer font-bold;
     }
   }
-  .type-tag {
-    @apply mt-4 w-full p-0;
-    @apply text-lg bg-transparent border-none text-white;
-
-    ::v-deep() {
-      .el-tag__content {
-        @apply flex justify-center;
-        @apply w-full;
-
-        img {
-          @apply w-5 mr-2 object-contain;
-        }
-      }
-    }
-  }
+}
+.type-tag-prop {
+  @apply mt-4;
+  @apply bg-transparent;
 }
 </style>

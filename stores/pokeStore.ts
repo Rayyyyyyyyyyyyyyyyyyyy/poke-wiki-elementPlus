@@ -9,10 +9,6 @@ export const PokeStore = defineStore("pokeStore", {
     typeMoveList: [] as TPokeMove[][],
   }),
   actions: {
-    getPokeAvatarUrl(id: number) {
-      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
-    },
-
     async getPokeMoveList() {
       const resMove = (await getPokeApi("move/list", {
         size: 99999,

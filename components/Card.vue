@@ -3,6 +3,7 @@ import type { TPokeItem } from "~/types/apiTypes";
 import AppUtils from "~/utils/AppUtils";
 import { PokeStore } from "~/stores/pokeStore";
 import { ETypeColor, ETypeContext } from "~/consts/appConst";
+import appUtils from "~/utils/AppUtils";
 
 const props = defineProps({
   poke_file: {
@@ -19,10 +20,6 @@ const pokeFile = computed(() => {
   }
 });
 
-const toFixedWidth = (index: number) => {
-  return `#${index.toString().padStart(4, "0")}`;
-};
-
 const transformTypeToColor = (type: string) => {
   const enType = ETypeContext[type as keyof typeof ETypeContext];
   return ETypeColor[enType];
@@ -34,7 +31,7 @@ const transformTypeToColor = (type: string) => {
     <div class="card-body">
       <img
         class="poke-img"
-        :src="pokeStore.getPokeAvatarUrl(pokeFile.index)"
+        :src="AppUtils.getPokeAvatarUrl(pokeFile.index)"
         alt=""
       />
       <div class="poke-type">
@@ -53,7 +50,7 @@ const transformTypeToColor = (type: string) => {
     <template #footer>
       <div class="footer">
         <p class="name">{{ pokeFile.nameZh }}</p>
-        <p class="id">{{ toFixedWidth(pokeFile.index) }}</p>
+        <p class="id">{{ appUtils.toFixedWidth(pokeFile.index) }}</p>
       </div>
     </template>
   </el-card>

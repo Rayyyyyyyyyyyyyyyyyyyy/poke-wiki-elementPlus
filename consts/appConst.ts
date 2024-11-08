@@ -20,7 +20,7 @@ export enum ETypeContext {
 }
 export enum ETypeColor {
   base = "#9FA19F",
-  fire = "#E62829",
+  fire = "#D84816",
   water = "#2980EF",
   fighting = "#FF8000",
   flying = "#81B9EF",

@@ -1,0 +1,13 @@
+.type-tag {
+  @apply  w-[104px] p-0  #{!important};
+  @apply text-lg border-none text-white #{!important};
+
+  .el-tag__content {
+    @apply flex justify-center;
+    @apply w-full text-lg;
+
+    img {
+      @apply w-5 mr-2 object-contain;
+    }
+  }
+}
