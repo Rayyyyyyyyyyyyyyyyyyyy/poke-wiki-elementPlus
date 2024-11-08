@@ -84,3 +84,9 @@ export const typeList = [
   "恶",
   "妖精",
 ];
+
+export enum EPageName {
+  "/pokemon/IllustratedBook" = "全國圖鑑",
+  "/pokemon/MoveList" = "招式列表",
+  "/pokemon/AreaList" = "地點列表",
+}

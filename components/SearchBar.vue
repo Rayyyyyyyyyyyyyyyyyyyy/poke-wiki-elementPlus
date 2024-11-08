@@ -1,30 +1,30 @@
 <script setup lang="ts">
 import { Search, Operation } from "@element-plus/icons-vue";
+import { EPageName } from "~/consts/appConst";
 
 const state = reactive({
   keyword: "",
 });
+
+const route = useRoute();
+console.log("route", route);
+const pageTitle = EPageName[route.path as keyof typeof EPageName];
+const router = useRouter();
+const onArrowClick = () => {
+  router.push("/");
+};
 </script>
 
 <template>
   <div class="search-bar">
-    <el-dropdown placement="bottom-start">
-      <el-icon class="menu-icon"><Operation /></el-icon>
-      <template #dropdown>
-        <el-dropdown-menu>
-          <el-dropdown-item
-            v-for="(color, inx) in [
-              'header/red_item',
-              'header/orange_item',
-              'header/blue_item',
-              'header/green_item',
-            ]"
-          >
-            <ImageComponent :key="inx" :url-path="color" />
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
+    <div class="go-back">
+      <div class="title-arrow" @click="onArrowClick" v-if="route.path !== '/'">
+        <ImageComponent url-path="arrow_left" />
+        <p class="title">
+          {{ pageTitle }}
+        </p>
+      </div>
+    </div>
 
     <el-input
       class="search-input"
@@ -39,13 +39,11 @@ const state = reactive({
 .search-bar {
   @apply w-full h-16;
   @apply flex items-center justify-between;
-  @apply lg:justify-end;
-
-  .menu-icon {
-    @apply text-xl cursor-pointer;
-    @apply lg:hidden;
+  .title-arrow {
+    .title {
+      @apply ml-1;
+    }
   }
-
   .search-input {
     @apply w-5/12 h-full;
 

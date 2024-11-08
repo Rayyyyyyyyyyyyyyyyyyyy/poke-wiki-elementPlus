@@ -36,7 +36,7 @@ const { color, enName } = appUtils.transactionNameToColor(moveTypeZh);
       class="type-tag-prop"
       :en_name="enName"
       :zh_name="moveTypeZh"
-    ></TagComponent>
+    />
   </el-card>
 </template>
 

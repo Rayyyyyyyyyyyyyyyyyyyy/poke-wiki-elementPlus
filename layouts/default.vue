@@ -4,7 +4,10 @@
   <div class="page-wrapper">
     <TheHeader />
     <div class="main">
-      <slot />
+      <SearchBar />
+      <div class="slot-wrapper">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
@@ -19,7 +22,12 @@
   .main {
     max-width: 1840px;
     height: calc(100% - 9rem);
-    @apply w-10/12  mx-auto;
+    @apply w-10/12 mx-auto pt-6;
+
+    .slot-wrapper {
+      @apply w-full h-full;
+      @apply py-4;
+    }
   }
 }
 </style>

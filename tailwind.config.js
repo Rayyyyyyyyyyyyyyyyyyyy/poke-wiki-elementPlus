@@ -15,7 +15,7 @@ export default {
           DEFAULT: "#003A70",
         },
         secondary: {
-          DEFAULT: "#A6A18A",
+          DEFAULT: "#4A6DBF",
         },
         bg: {
           DEFAULT: "#666666",

@@ -1,0 +1,9 @@
+.title-arrow {
+  @apply flex items-center;
+  @apply cursor-pointer ;
+
+  .title {
+    font-size: 28px;
+    @apply  text-primary;
+  }
+}
