@@ -165,9 +165,21 @@ watch(
         <div class="poke-avatar" v-if="dataTypeIsPoke">
           <img
             class="poke-img"
+            :src="AppUtils.getPokeAvatarShinyUrl(state.pokeData.index)"
+            alt=""
+          />
+          <img
+            class="poke-img"
             :src="AppUtils.getPokeAvatarUrl(state.pokeData.index)"
             alt=""
           />
+          <div class="gif-box">
+            <img
+              class="poke-gif"
+              :src="AppUtils.getPokeAvatarGif(state.pokeData.index)"
+              alt=""
+            />
+          </div>
         </div>
       </div>
     </template>
@@ -283,6 +295,15 @@ watch(
       @apply w-full h-full;
       .poke-img {
         @apply w-[280px] h-[280px];
+      }
+      .gif-box {
+        @apply w-10 h-full;
+        @apply relative;
+
+        .poke-gif {
+          @apply absolute bottom-1/4 left-6;
+          @apply scale-[2.5];
+        }
       }
     }
   }

@@ -14,13 +14,15 @@ export const PokeStore = defineStore("pokeStore", {
     detailVisible: false,
     pokeId: -1,
     dataType: "",
+    checkTypeList: [] as string[],
+    resetTypeCheck: false,
   }),
   actions: {
     async getPokemonList() {
       const res = (await getPokeApi("pokemon/list", {})) as TResponse<
         TPokeItem[]
       >;
-      this.fullPokeList = res.data;
+      this.fullPokeList = res.data.filter((item) => item.form == "");
     },
     async getPokeMoveList() {
       const resMove = (await getPokeApi("move/list", {
@@ -48,6 +50,13 @@ export const PokeStore = defineStore("pokeStore", {
       this.updateDetailDialogVisible(true);
       this.setWantShowPokeId(id);
       this.setDetailType("poke");
+    },
+
+    setTypeCheckToStore(nameList: string[]) {
+      this.checkTypeList = nameList;
+    },
+    typeCheckDoReset(doReset: boolean) {
+      this.resetTypeCheck = doReset;
     },
   },
 });

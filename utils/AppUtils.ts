@@ -19,5 +19,11 @@ const AppUtils = {
   getPokeAvatarUrl(id: number) {
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
   },
+  getPokeAvatarShinyUrl(id: number) {
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/${id}.png`;
+  },
+  getPokeAvatarGif(id: number) {
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${id}.gif`;
+  },
 };
 export default AppUtils;

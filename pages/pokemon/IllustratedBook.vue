@@ -21,12 +21,38 @@ const loadMorePoke = () => {
   const fullList = AppUtils.deepCloneData(
     pokeStore.fullPokeList,
   ) as TPokeItem[];
-  const loadList = fullList.slice(
-    state.pokeList.length,
-    state.pokeList.length + singleCount,
-  );
-  state.pokeList.push(...loadList);
+  if (pokeStore.checkTypeList.length > 0) {
+    state.pokeList = [];
+    const filterList = fullList.filter(
+      (item) =>
+        pokeStore.checkTypeList.includes(item.type1) ||
+        pokeStore.checkTypeList.includes(item.type2),
+    );
+
+    const loadList = filterList.slice(
+      state.pokeList.length,
+      state.pokeList.length + singleCount,
+    );
+    state.pokeList.push(...loadList);
+  } else {
+    if (pokeStore.resetTypeCheck) {
+      state.pokeList = [];
+    }
+
+    const loadList = fullList.slice(
+      state.pokeList.length,
+      state.pokeList.length + singleCount,
+    );
+    state.pokeList.push(...loadList);
+  }
 };
+
+watch(
+  () => pokeStore.checkTypeList,
+  () => {
+    loadMorePoke();
+  },
+);
 </script>
 
 <template>
