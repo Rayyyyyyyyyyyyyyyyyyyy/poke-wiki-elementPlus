@@ -5,24 +5,24 @@ import { getPokeApi } from "~/servies/pokeApi";
 import type { TBaseStat, TOption, TPokeDetail } from "~/types/apiTypes";
 import type { TResponse } from "~/types/apiTypes";
 
+type TDetail = {
+  weight: string;
+  height: string;
+  abilityList: string[];
+  abilityHide: string;
+};
 const props = defineProps({
   dialog_visible: {
     type: Boolean,
     default: false,
   },
-  poke_id: {
-    type: Number,
-    default: -1,
-  },
-  dialog_type: {
-    type: String,
-    default: "poke",
-  },
 });
+
+const pokeStore = PokeStore();
 
 const emits = defineEmits(["dialogCloseEmit"]);
 
-const dataTypeIsPoke = computed(() => props.dialog_type == "poke");
+const dataTypeIsPoke = computed(() => pokeStore.dataType == "poke");
 
 const state = reactive({
   moveColor: "",
@@ -35,18 +35,13 @@ const state = reactive({
     },
   ] as { zhName: string; enName: string; color: string }[],
   pokeData: {} as TPokeDetail,
-  contentDetail: {} as {
-    weight: string;
-    height: string;
-    abilityList: string[];
-    abilityHide: string;
-  },
+  contentDetail: {} as TDetail,
   baseStat: [] as TOption[],
   type1Color: "",
 });
 const getPokeDetail = async () => {
   return (await getPokeApi("pokemon/detail", {
-    index: props.poke_id,
+    index: pokeStore.pokeId,
   })) as TResponse<TPokeDetail[]>;
 };
 
@@ -127,7 +122,7 @@ watch(
   async () => {
     if (props.dialog_visible) {
       if (dataTypeIsPoke.value) {
-        if (props.poke_id > -1) {
+        if (pokeStore.pokeId > -1) {
           getPokeDetail().then((res) => {
             state.pokeData = res.data[0];
             setColorName();
@@ -136,6 +131,14 @@ watch(
           });
         }
       }
+    } else {
+      pokeStore.updateDetailDialogVisible(false);
+      pokeStore.setWantShowPokeId(-1);
+      pokeStore.setDetailType("");
+      state.pokeData = {} as TPokeDetail;
+      state.moveColor = "";
+      state.contentDetail = {} as TDetail;
+      state.baseStat = [];
     }
   },
 );

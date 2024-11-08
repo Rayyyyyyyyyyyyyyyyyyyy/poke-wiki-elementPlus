@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const pokeStore = PokeStore();
+</script>
 
 <template>
   <div class="page-wrapper">
@@ -10,6 +12,11 @@
       </div>
     </div>
   </div>
+
+  <DetailDialog
+    :dialog_visible="pokeStore.detailVisible"
+    @dialogCloseEmit="pokeStore.updateDetailDialogVisible(false)"
+  />
 </template>
 
 <style scoped lang="scss">

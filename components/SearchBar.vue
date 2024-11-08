@@ -7,7 +7,6 @@ const state = reactive({
 });
 
 const route = useRoute();
-console.log("route", route);
 const pageTitle = EPageName[route.path as keyof typeof EPageName];
 const router = useRouter();
 const onArrowClick = () => {

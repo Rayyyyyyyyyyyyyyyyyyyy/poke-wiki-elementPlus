@@ -1,29 +1,18 @@
 <script setup lang="ts">
-import { getPokeApi } from "~/servies/pokeApi";
-import type { TPokeItem, TResponse } from "~/types/apiTypes";
 import { areaNameList } from "~/consts/appConst";
 import { useRouter } from "#app";
 
-const state = reactive({
-  heroList: [] as TPokeItem[],
-  detailVisible: false,
-  pokeId: -1,
-  dataType: "",
-});
 const pokeStore = PokeStore();
-const res = (await getPokeApi("pokemon/list", {})) as TResponse<TPokeItem[]>;
-state.heroList = res.data.slice(0, 9);
 
-pokeStore.getPokeMoveList();
+if (process.client) {
+  onMounted(() => {
+    pokeStore.getPokeMoveList();
+    pokeStore.getPokemonList();
+  });
+}
 
-const openDetail = (id: number) => {
-  state.pokeId = id;
-  state.dataType = "poke";
-  state.detailVisible = true;
-};
 const router = useRouter();
 const goIllustratedList = () => {
-  console.log("here");
   router.push("/pokemon/IllustratedBook");
 };
 </script>
@@ -39,10 +28,10 @@ const goIllustratedList = () => {
           <div class="card-list">
             <Card
               class="poke-card-prop"
-              v-for="(item, inde) in state.heroList"
+              v-for="(item, inde) in pokeStore.fullPokeList.slice(0, 9)"
               :key="inde"
               :poke_file="item"
-              @click="openDetail(item.index)"
+              @click="pokeStore.openDetailDialog(item.index)"
             />
           </div>
         </ContainerItem>
@@ -52,7 +41,7 @@ const goIllustratedList = () => {
     <div class="container-row">
       <div class="container-col">
         <ContainerItem item_title="招式列表">
-          <div class="type-card-list">
+          <div class="type-card-list" v-if="pokeStore.typeMoveList.length > 0">
             <TypeCard
               class="poke-move-prop"
               v-for="(moveList, inde) in pokeStore.typeMoveList"
@@ -76,12 +65,6 @@ const goIllustratedList = () => {
       </div>
     </div>
   </div>
-  <DetailDialog
-    :dialog_visible="state.detailVisible"
-    @dialogCloseEmit="state.detailVisible = false"
-    :poke_id="state.pokeId"
-    :dialog_type="state.dataType"
-  />
 </template>
 
 <style scoped lang="scss">
