@@ -4,75 +4,77 @@ import {
   ETypeColorActive,
   ETypeColorHover,
   ETypeContext,
+  moveType,
   typeList,
 } from "~/consts/appConst";
 import { AppUtils, PokeStore } from "#imports";
+import type { TStateType } from "~/types/apiTypes";
 
-type TStateType = {
-  enName: string;
-  color: string;
-  checked: boolean;
-  cnName: string;
-  hoverColor: string;
-  activeColor: string;
-};
+const props = defineProps({
+  show_move_only: {
+    type: Boolean,
+    default: false,
+  },
+});
+
 const state = reactive({
   stateTypeList: [] as TStateType[],
 });
 
-const cloneTypeList = AppUtils.deepCloneData(typeList) as string[];
-state.stateTypeList = cloneTypeList.map((name) => {
-  const enName = ETypeContext[name as keyof typeof ETypeContext];
-  return {
-    enName: enName,
-    cnName: name,
-    color: ETypeColor[enName],
-    checked: false,
-    hoverColor: ETypeColorHover[enName],
-    activeColor: ETypeColorActive[enName],
-  };
-});
-
-const pokeStore = PokeStore();
-const onTagClick = (val: boolean, data: TStateType) => {
-  const hoverId = `tag-${data.enName}`;
-  const idDom = document.getElementById(hoverId);
-
-  const cloneNameList = AppUtils.deepCloneData(
-    pokeStore.checkTypeList,
-  ) as string[];
-
-  if (idDom) {
-    if (val) {
-      pokeStore.typeCheckDoReset(false);
-      idDom.style.backgroundColor = data.activeColor;
-      cloneNameList.push(data.cnName);
-      pokeStore.setTypeCheckToStore(cloneNameList);
-    } else {
-      idDom.style.backgroundColor = data.hoverColor;
-
-      const afterSetList = cloneNameList.filter((name) => name !== data.cnName);
-      pokeStore.setTypeCheckToStore(afterSetList);
-    }
-  }
+const mapTypeToState = (arr: string[]) => {
+  return arr.map((name) => {
+    const enName = ETypeContext[name as keyof typeof ETypeContext];
+    return {
+      enName: enName,
+      cnName: name,
+      color: ETypeColor[enName],
+      checked: false,
+      hoverColor: ETypeColorHover[enName],
+      activeColor: ETypeColorActive[enName],
+    };
+  });
 };
+
+const showMax = computed(() => props.show_move_only);
+const pokeStore = PokeStore();
+
+if (showMax.value) {
+  const fullList = [...typeList, ...moveType];
+  const cloneList = AppUtils.deepCloneData(fullList) as string[];
+  pokeStore.setTypeCheckList(mapTypeToState(cloneList));
+} else {
+  const cloneList = AppUtils.deepCloneData(typeList) as string[];
+  pokeStore.setTypeCheckList(mapTypeToState(cloneList));
+}
+
 const setHover = (data: TStateType) => {
   const hoverId = `tag-${data.enName}`;
   const idDom = document.getElementById(hoverId);
   if (idDom) {
+    if (moveType.includes(data.cnName)) {
+      idDom.style.color = "white";
+    }
     idDom.style.backgroundColor = data.hoverColor;
   }
 };
 const removerHover = (data: TStateType) => {
   const hoverId = `tag-${data.enName}`;
   const idDom = document.getElementById(hoverId);
-  if (idDom) {
-    idDom.style.backgroundColor = data.color;
+  if (idDom && !data.checked) {
+    if (moveType.includes(data.cnName)) {
+      idDom.style.backgroundColor = "transparent";
+      idDom.style.color = data.color;
+    } else {
+      idDom.style.backgroundColor = data.color;
+    }
   }
 };
 const onResetClick = () => {
-  pokeStore.setTypeCheckToStore([]);
-  pokeStore.typeCheckDoReset(true);
+  const cloneList = AppUtils.deepCloneData(
+    pokeStore.stateTypeList,
+  ) as TStateType[];
+  cloneList.forEach((item) => (item.checked = false));
+  pokeStore.setTypeCheckList(cloneList);
 };
 </script>
 
@@ -80,20 +82,38 @@ const onResetClick = () => {
   <div class="tag-box">
     <div class="tag-title">點擊標籤篩選</div>
 
-    <div class="tag-btn">
+    <div
+      class="tag-btn"
+      :class="{ 'items-end': show_move_only, 'items-center': !show_move_only }"
+    >
       <div class="tag-list">
         <el-check-tag
-          v-for="(item, idex) in state.stateTypeList"
+          v-for="(item, idex) in pokeStore.stateTypeList"
           :id="`tag-${item.enName}`"
           :key="idex"
           class="type-check-tag"
-          :style="{ background: item.color }"
+          :style="{
+            background: item.checked
+              ? item.activeColor
+              : idex < typeList.length
+                ? item.color
+                : 'transparent',
+            color: item.checked
+              ? 'white'
+              : idex > typeList.length - 1
+                ? item.color
+                : '',
+            border: idex > typeList.length - 1 ? '1px solid' : '',
+            'border-color': idex > typeList.length - 1 ? item.color : '',
+          }"
           v-model:checked="item.checked"
-          @change="(status) => onTagClick(status, item)"
           @mouseover="setHover(item)"
           @mouseout="removerHover(item)"
         >
-          <ImageComponent :url-path="`type/Icon_${item.enName}`" />
+          <ImageComponent
+            v-if="idex < typeList.length"
+            :url-path="`type/Icon_${item.enName}`"
+          />
 
           {{ item.cnName }}
         </el-check-tag>
@@ -113,7 +133,7 @@ const onResetClick = () => {
   }
 
   .tag-btn {
-    @apply flex items-center;
+    @apply flex;
 
     .reset-btn {
       @apply bg-primary text-white rounded-lg;

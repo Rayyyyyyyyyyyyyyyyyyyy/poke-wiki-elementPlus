@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import AppUtils from "~/utils/AppUtils";
+
 const pokeStore = PokeStore();
 </script>
 
@@ -11,6 +13,17 @@ const pokeStore = PokeStore();
         <slot />
       </div>
     </div>
+    <el-backtop
+      :right="40"
+      :bottom="40"
+      target=".page-wrapper"
+      :style="{
+        background: 'transparent',
+        boxShadow: '0 0 #0000',
+      }"
+    >
+      <img class="poke-gif" :src="AppUtils.getPokeAvatarGif(681)" alt="" />
+    </el-backtop>
   </div>
 
   <DetailDialog

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { AppUtils } from "#imports";
 import type { TPokeItem } from "~/types/apiTypes";
 
 const pokeStore = PokeStore();
@@ -12,17 +11,19 @@ if (process.client) {
   onMounted(async () => {
     await pokeStore.getPokemonList();
     setTimeout(() => {
-      loadMorePoke();
+      loadMorePoke(false);
     });
   });
 }
 
-const loadMorePoke = () => {
+const loadMorePoke = (fromScroll: boolean = true) => {
   const fullList = AppUtils.deepCloneData(
     pokeStore.fullPokeList,
   ) as TPokeItem[];
   if (pokeStore.checkTypeList.length > 0) {
-    state.pokeList = [];
+    if (!fromScroll) {
+      state.pokeList = [];
+    }
     const filterList = fullList.filter(
       (item) =>
         pokeStore.checkTypeList.includes(item.type1) ||
@@ -50,7 +51,7 @@ const loadMorePoke = () => {
 watch(
   () => pokeStore.checkTypeList,
   () => {
-    loadMorePoke();
+    loadMorePoke(false);
   },
 );
 </script>
@@ -75,6 +76,6 @@ watch(
 <style scoped lang="scss">
 .poke-list {
   @apply grid auto-rows-auto grid-cols-4 gap-14;
-  @apply mt-8;
+  @apply mt-10;
 }
 </style>

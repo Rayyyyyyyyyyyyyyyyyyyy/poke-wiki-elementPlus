@@ -1,22 +1,31 @@
 import { defineStore } from "pinia";
 import { getPokeApi } from "~/servies/pokeApi";
-import type { TPokeMove, TResponse } from "~/types/apiTypes";
+import type { TPokeMove, TResponse, TStateType } from "~/types/apiTypes";
 import { typeList } from "~/consts/appConst";
 import type { TPokeItem } from "~/types/apiTypes";
-import { AppUtils } from "#build/imports";
 
 export const PokeStore = defineStore("pokeStore", {
   state: () => ({
     fullMoveList: [] as TPokeMove[],
+    moveGenerationList: [] as TPokeMove[][],
     typeMoveList: [] as TPokeMove[][],
     fullPokeList: [] as TPokeItem[],
 
     detailVisible: false,
     pokeId: -1,
     dataType: "",
-    checkTypeList: [] as string[],
     resetTypeCheck: false,
+    stateTypeList: [] as TStateType[],
   }),
+  getters: {
+    checkTypeList(state) {
+      const nameList = state.stateTypeList
+        .filter((item) => item.checked)
+        .map((item) => item.cnName);
+      state.resetTypeCheck = nameList.length == 0;
+      return nameList;
+    },
+  },
   actions: {
     async getPokemonList() {
       const res = (await getPokeApi("pokemon/list", {})) as TResponse<
@@ -28,9 +37,15 @@ export const PokeStore = defineStore("pokeStore", {
       const resMove = (await getPokeApi("move/list", {
         size: 99999,
       })) as TResponse<TPokeMove[]>;
+
       const cloneData = AppUtils.deepCloneData(resMove.data) as TPokeMove[];
 
       this.fullMoveList = cloneData;
+      for (let i = 1; i < 10; i++) {
+        this.moveGenerationList.push(
+          cloneData.filter((item) => item.generation == i),
+        );
+      }
       typeList.forEach((typeStr) => {
         this.typeMoveList.push(
           cloneData.filter((item) => item.type == typeStr),
@@ -51,12 +66,8 @@ export const PokeStore = defineStore("pokeStore", {
       this.setWantShowPokeId(id);
       this.setDetailType("poke");
     },
-
-    setTypeCheckToStore(nameList: string[]) {
-      this.checkTypeList = nameList;
-    },
-    typeCheckDoReset(doReset: boolean) {
-      this.resetTypeCheck = doReset;
+    setTypeCheckList(typeList: TStateType[]) {
+      this.stateTypeList = typeList;
     },
   },
 });

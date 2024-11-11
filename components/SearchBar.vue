@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Search, Operation } from "@element-plus/icons-vue";
+import { Search } from "@element-plus/icons-vue";
 import { EPageName } from "~/consts/appConst";
 
 const state = reactive({
@@ -7,7 +7,10 @@ const state = reactive({
 });
 
 const route = useRoute();
-const pageTitle = EPageName[route.path as keyof typeof EPageName];
+const pageTitle = computed(() => {
+  return EPageName[route.path as keyof typeof EPageName];
+});
+
 const router = useRouter();
 const onArrowClick = () => {
   router.push("/");

@@ -106,3 +106,12 @@ export type TPokeDetail = {
     pp: string;
   }[];
 };
+
+export type TStateType = {
+  enName: string;
+  color: string;
+  checked: boolean;
+  cnName: string;
+  hoverColor: string;
+  activeColor: string;
+};

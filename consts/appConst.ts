@@ -17,6 +17,11 @@ export enum ETypeContext {
   "龙" = "dragon",
   "恶" = "dark",
   "妖精" = "fairy",
+  "物理" = "physics",
+  "特殊" = "special",
+  "变化" = "status",
+  "極巨招式" = "max",
+  "超極巨招式" = "G-max",
 }
 export enum ETypeColor {
   base = "#9FA19F",
@@ -37,6 +42,11 @@ export enum ETypeColor {
   dragon = "#5060E1",
   dark = "#50413F",
   fairy = "#EF70EF",
+  physics = "#3D7DCA",
+  special = "#3D7DCA",
+  status = "#3D7DCA",
+  max = "#003A70",
+  "G-max" = "#003A70",
 }
 export enum ETypeColorHover {
   base = "#888B88",
@@ -57,26 +67,36 @@ export enum ETypeColorHover {
   dark = "#413533",
   steel = "#509094",
   fairy = "#D65BD6",
+  physics = "#3567A3",
+  special = "#3567A3",
+  status = "#3567A3",
+  max = "#002C5D",
+  "G-max" = "#002C5D",
 }
 export enum ETypeColorActive {
-  base = "#757B75",
-  fire = "#A23A13",
-  water = "#1C63B6",
-  electric = "#C68900",
-  grass = "#2C7920",
-  ice = "#2F9DB7",
-  fighting = "#CC6600",
-  poison = "#5F2981",
-  ground = "#5F3618",
-  flying = "#5489B3",
-  psychic = "#B72E55",
-  rock = "#75794E",
-  bug = "#667C14",
-  ghost = "#4B2A4D",
-  dragon = "#3A47A7",
-  dark = "#362C2A",
-  steel = "#437C79",
+  base = "#6B6F6C",
+  fire = "#9C2A0E",
+  water = "#1A537D",
+  electric = "#B87800",
+  grass = "#206B17",
+  ice = "#1A8C99",
+  fighting = "#C54B00",
+  poison = "#4A1F6D",
+  ground = "#4B2C14",
+  flying = "#3E6D8D",
+  psychic = "#9B1C45",
+  bug = "#4A6210",
+  rock = "#5F613B",
+  ghost = "#3A1E39",
+  dragon = "#2F3B89",
+  dark = "#2A1F1D",
+  steel = "#346060",
   fairy = "#B54BB4",
+  physics = "#2A5C8A",
+  special = "#2A5C8A",
+  status = "#2A5C8A",
+  max = "#001E47",
+  "G-max" = "#001E47",
 }
 
 export const areaNameList = [
@@ -124,9 +144,11 @@ export const typeList = [
   "恶",
   "妖精",
 ];
+export const moveType = ["物理", "特殊", "变化", "極巨招式", "超極巨招式"];
 
 export enum EPageName {
   "/pokemon/IllustratedBook" = "全國圖鑑",
-  "/pokemon/MoveList" = "招式列表",
+  "/pokemon/MoveBook" = "招式列表",
+  "/pokemon/AbilityList" = "特性列表",
   "/pokemon/AreaList" = "地點列表",
 }

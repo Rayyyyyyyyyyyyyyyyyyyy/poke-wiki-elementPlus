@@ -1,4 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const router = useRouter();
+const goPageOnIndex = (name: string) => {
+  const fileName = name.replace("header", "/pokemon");
+  router.push(fileName);
+};
+</script>
 
 <template>
   <div class="header background">
@@ -10,14 +16,18 @@
       <div class="route-list">
         <div
           class="header-item"
-          v-for="(color, inx) in [
-            'header/red_item',
-            'header/orange_item',
-            'header/blue_item',
-            'header/green_item',
+          v-for="(pathName, inx) in [
+            'header/IllustratedBook',
+            'header/MoveBook',
+            'header/AbilityList',
+            'header/AreaList',
           ]"
         >
-          <ImageComponent :key="inx" :url-path="color" />
+          <ImageComponent
+            :key="inx"
+            :url-path="pathName"
+            @click="goPageOnIndex(pathName)"
+          />
         </div>
       </div>
     </div>
