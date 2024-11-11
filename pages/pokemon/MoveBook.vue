@@ -6,7 +6,6 @@ import {
   moveType,
   typeList,
 } from "~/consts/appConst";
-import { getPokeV2 } from "~/servies/pokeApi_V2";
 
 const pokeStore = PokeStore();
 
@@ -93,85 +92,91 @@ const openMoveDetail = async (rowData: TPokeMove) => {
 </script>
 
 <template>
-  <TypeTagList :show_move_only="true" />
+  <div class="move-wrapper">
+    <TypeTagList :show_move_only="true" />
 
-  <div class="table-list">
-    <div
-      class="table-item"
-      v-for="table in state.typeMoveTableList"
-      :key="table.label"
-    >
-      <div class="title">{{ table.label }}</div>
-      <el-table
-        :data="table.tableData"
-        class="move-table"
-        header-cell-class-name="move-table-header"
-        row-class-name="move-table-row"
-        cell-class-name="move-table-cell"
-        border
+    <div class="table-list">
+      <div
+        class="table-item"
+        v-for="table in state.typeMoveTableList"
+        :key="table.label"
       >
-        <el-table-column label="編號" prop="id" align="center" width="60" />
-        <el-table-column label="中文名" align="center">
-          <template #default="{ row, column, $index }">
-            <p class="dialog-link" @click="openMoveDetail(row)">
-              {{ row.nameZh }}
-            </p>
-          </template>
-        </el-table-column>
-        <el-table-column label="英文名" align="center">
-          <template #default="{ row, column, $index }">
-            <p class="dialog-link" @click="openMoveDetail(row)">
-              {{ row.nameEn }}
-            </p>
-          </template>
-        </el-table-column>
-        <el-table-column label="日文名" align="center">
-          <template #default="{ row, column, $index }">
-            <p class="dialog-link" @click="openMoveDetail(row)">
-              {{ row.nameJa }}
-            </p>
-          </template>
-        </el-table-column>
-        <el-table-column label="屬性" align="center" width="100">
-          <template #default="{ row, column, $index }">
-            <el-tag class="table-type-tag" :color="setTagColor(row.type)">
-              {{ row.type }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="分類"
-          prop="category"
-          align="center"
-          width="100"
+        <div class="title">{{ table.label }}</div>
+        <el-table
+          :data="table.tableData"
+          class="move-table"
+          header-cell-class-name="move-table-header"
+          row-class-name="move-table-row"
+          cell-class-name="move-table-cell"
+          border
         >
-          <template #default="{ row, column, $index }">
-            <el-tag
-              class="table-type-tag"
-              round
-              :color="setTagColor(row.category)"
-            >
-              <p>{{ row.category }}</p>
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="威力" align="center" width="80">
-          <template #default="{ row, column, $index }">
-            <p>{{ row.power || "-" }}</p>
-          </template>
-        </el-table-column>
-        <el-table-column label="命中" align="center" width="100">
-          <template #default="{ row, column, $index }">
-            <p>{{ row.accuracy || "-" }}</p>
-          </template>
-        </el-table-column>
-        <el-table-column label="PP" prop="pp" align="center" width="80" />
-      </el-table>
+          <el-table-column label="編號" prop="id" align="center" width="60" />
+          <el-table-column label="中文名" align="center">
+            <template #default="{ row, column, $index }">
+              <p class="dialog-link" @click="openMoveDetail(row)">
+                {{ row.nameZh }}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column label="英文名" align="center">
+            <template #default="{ row, column, $index }">
+              <p class="dialog-link" @click="openMoveDetail(row)">
+                {{ row.nameEn }}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column label="日文名" align="center">
+            <template #default="{ row, column, $index }">
+              <p class="dialog-link" @click="openMoveDetail(row)">
+                {{ row.nameJa }}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column label="屬性" align="center" width="100">
+            <template #default="{ row, column, $index }">
+              <el-tag class="table-type-tag" :color="setTagColor(row.type)">
+                {{ row.type }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="分類"
+            prop="category"
+            align="center"
+            width="100"
+          >
+            <template #default="{ row, column, $index }">
+              <el-tag
+                class="table-type-tag"
+                round
+                :color="setTagColor(row.category)"
+              >
+                <p>{{ row.category }}</p>
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="威力" align="center" width="80">
+            <template #default="{ row, column, $index }">
+              <p>{{ row.power || "-" }}</p>
+            </template>
+          </el-table-column>
+          <el-table-column label="命中" align="center" width="100">
+            <template #default="{ row, column, $index }">
+              <p>{{ row.accuracy || "-" }}</p>
+            </template>
+          </el-table-column>
+          <el-table-column label="PP" prop="pp" align="center" width="80" />
+        </el-table>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+.move-wrapper {
+  max-width: 1440px;
+  @apply mx-auto;
+}
 .table-list {
   .table-item {
     @apply mb-4;

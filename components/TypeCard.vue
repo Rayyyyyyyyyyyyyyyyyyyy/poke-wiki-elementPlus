@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { TPokeMove } from "~/types/apiTypes";
-import { ETypeColor, ETypeContext } from "~/consts/appConst";
+import type {  TPokeMove } from "~/types/apiTypes";
 import appUtils from "~/utils/AppUtils";
 
 const props = defineProps({
@@ -19,6 +18,13 @@ const moveList = computed(() => {
 
 const moveTypeZh = moveList.value[0].type as string;
 const { color, enName } = appUtils.transactionNameToColor(moveTypeZh);
+
+const pokeStore = PokeStore();
+
+const openMoveDetail = (move: TPokeMove) => {
+  pokeStore.openMoveDetailDialog(move.nameZh);
+  pokeStore.setWantShowMoveId(move.id.toString().padStart(3, "0"));
+};
 </script>
 
 <template>
@@ -28,6 +34,7 @@ const { color, enName } = appUtils.transactionNameToColor(moveTypeZh);
         class="move-name"
         v-for="(move, index) in moveList.slice(0, 7)"
         :key="index"
+        @click="openMoveDetail(move)"
       >
         {{ move.nameZh }}
       </p>

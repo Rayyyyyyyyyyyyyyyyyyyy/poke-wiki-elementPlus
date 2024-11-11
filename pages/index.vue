@@ -19,6 +19,9 @@ const router = useRouter();
 const goIllustratedList = () => {
   router.push("/pokemon/IllustratedBook");
 };
+const goMoveBook = () => {
+  router.push("/pokemon/MoveBook");
+};
 </script>
 
 <template>
@@ -44,7 +47,7 @@ const goIllustratedList = () => {
 
     <div class="container-row">
       <div class="container-col">
-        <ContainerItem item_title="招式列表">
+        <ContainerItem item_title="招式列表" @arrowClickEmit="goMoveBook">
           <div class="type-card-list" v-if="pokeStore.typeMoveList.length > 0">
             <TypeCard
               class="poke-move-prop"
