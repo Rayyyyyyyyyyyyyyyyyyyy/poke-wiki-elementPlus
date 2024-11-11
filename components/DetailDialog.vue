@@ -2,7 +2,13 @@
 import AppUtils from "~/utils/AppUtils";
 import appUtils from "~/utils/AppUtils";
 import { getPokeApi } from "~/servies/pokeApi";
-import type { TBaseStat, TOption, TPokeDetail } from "~/types/apiTypes";
+import type {
+  TBaseStat,
+  TMoveDetail,
+  TOption,
+  TOptionStrValue,
+  TPokeDetail,
+} from "~/types/apiTypes";
 import type { TResponse } from "~/types/apiTypes";
 
 type TDetail = {
@@ -10,6 +16,13 @@ type TDetail = {
   height: string;
   abilityList: string[];
   abilityHide: string;
+};
+
+type TTagItem = {
+  zhName: string;
+  enName: string;
+  color: string;
+  needIcon: boolean;
 };
 const props = defineProps({
   dialog_visible: {
@@ -32,17 +45,25 @@ const state = reactive({
       zhName: "",
       enName: "",
       color: "",
+      needIcon: true,
     },
-  ] as { zhName: string; enName: string; color: string }[],
+  ] as TTagItem[],
   pokeData: {} as TPokeDetail,
+  moveData: {} as TMoveDetail,
   contentDetail: {} as TDetail,
   baseStat: [] as TOption[],
   type1Color: "",
+  moveDoc: [] as TOptionStrValue[],
 });
 const getPokeDetail = async () => {
   return (await getPokeApi("pokemon/detail", {
     index: pokeStore.pokeId,
   })) as TResponse<TPokeDetail[]>;
+};
+const getMoveDetail = async () => {
+  return (await getPokeApi("move/detail", {
+    nameZh: pokeStore.moveName,
+  })) as TResponse<TMoveDetail[]>;
 };
 
 const setColorName = () => {
@@ -58,6 +79,7 @@ const setColorName = () => {
       zhName: state.pokeData.type1,
       enName: enName,
       color: color,
+      needIcon: true,
     },
   ];
   if (state.pokeData.type2) {
@@ -69,11 +91,46 @@ const setColorName = () => {
       zhName: state.pokeData.type2,
       enName: enName,
       color: color,
+      needIcon: true,
     });
     state.moveColor = `linear-gradient(to top right, ${type1Color} 0%, ${type1Color} 45%, ${type2Color} 55%, ${type2Color} 100%)`;
   } else {
     state.moveColor = color;
   }
+};
+
+const setMoveDetail = async () => {
+  const { color, enName } = appUtils.transactionNameToColor(
+    state.moveData.type,
+  );
+
+  state.moveColor = color;
+  state.titleName = state.moveData.nameZh;
+  state.tagNameList = [
+    {
+      zhName: state.moveData.type,
+      enName: enName,
+      color: color,
+      needIcon: true,
+    },
+    {
+      zhName: state.moveData.category,
+      enName: appUtils.transactionNameToColor(state.moveData.category).enName,
+      color: appUtils.transactionNameToColor(state.moveData.category).color,
+      needIcon: false,
+    },
+  ];
+  state.baseStat = [
+    { label: "PP", value: Number(state.moveData.pp) },
+    { label: "威力", value: Number(state.moveData.power) },
+    { label: "命中", value: Number(state.moveData.accuracy) },
+  ];
+  state.moveDoc = [
+    { label: "招式說明", value: state.moveData.detail.desc },
+    { label: "招式影響", value: state.moveData.detail.effect },
+    { label: "招式備註", value: state.moveData.detail.notes },
+    { label: "招式範圍", value: state.moveData.detail.scope },
+  ];
 };
 const setDetailContext = () => {
   state.contentDetail = {
@@ -125,18 +182,27 @@ watch(
         if (pokeStore.pokeId > -1) {
           getPokeDetail().then((res) => {
             state.pokeData = res.data[0];
+            state.moveData = {} as TMoveDetail;
             setColorName();
             setDetailContext();
             setBaseStat();
           });
         }
+      } else {
+        getMoveDetail().then((res) => {
+          state.pokeData = {} as TPokeDetail;
+          state.moveData = res.data[0];
+          setMoveDetail();
+        });
       }
     } else {
       pokeStore.updateDetailDialogVisible(false);
       pokeStore.setWantShowPokeId(-1);
       pokeStore.setDetailType("");
       state.pokeData = {} as TPokeDetail;
+      state.moveData = {} as TMoveDetail;
       state.moveColor = "";
+      state.type1Color = "";
       state.contentDetail = {} as TDetail;
       state.baseStat = [];
     }
@@ -161,7 +227,6 @@ watch(
         </div>
 
         <ImageComponent class="header-ball" url-path="detail/pokeball" />
-
         <div class="poke-avatar" v-if="dataTypeIsPoke">
           <img
             class="poke-img"
@@ -181,6 +246,9 @@ watch(
             />
           </div>
         </div>
+        <div class="move-gif" v-if="!dataTypeIsPoke">
+          <img :src="AppUtils.getMoveGif(pokeStore.moveId)" alt="" />
+        </div>
       </div>
     </template>
 
@@ -194,7 +262,8 @@ watch(
           class="type-tag-prop"
           :en_name="item.enName"
           :zh_name="item.zhName"
-        ></TagComponent>
+          :show_icon="item.needIcon"
+        />
       </div>
 
       <div class="detail-contain" v-if="dataTypeIsPoke">
@@ -246,7 +315,12 @@ watch(
       <p class="block-title big-title" :style="{ background: state.moveColor }">
         Base Stats
       </p>
-
+      <div class="move-dec" v-if="!dataTypeIsPoke">
+        <div class="move-dec-item" v-for="item in state.moveDoc">
+          <p class="title">{{ item.label }}</p>
+          <p class="doc-text">{{ item.value }}</p>
+        </div>
+      </div>
       <div class="progress-list">
         <el-row
           align="middle"
@@ -261,7 +335,7 @@ watch(
           </el-col>
           <el-col :span="2">
             <div class="value">
-              {{ item.value }}
+              {{ item.value > 0 ? item.value : "-" }}
             </div>
           </el-col>
           <el-col :span="19">
@@ -306,6 +380,15 @@ watch(
         }
       }
     }
+    .move-gif {
+      @apply flex justify-center items-start;
+      @apply w-full h-full relative;
+
+      img {
+        @apply absolute bottom-10;
+        @apply w-72 h-[214px];
+      }
+    }
   }
 
   .detail-body {
@@ -324,7 +407,18 @@ watch(
       @apply text-2xl mt-8;
       @apply font-medium;
     }
-
+    .move-dec {
+      @apply my-6 ml-8;
+      .move-dec-item + .move-dec-item {
+        @apply mt-4;
+      }
+      .title {
+        @apply mb-2 text-xl;
+      }
+      .doc-text {
+        @apply text-lg  whitespace-pre-line text-text/60 break-keep;
+      }
+    }
     .detail-contain {
       @apply w-full text-center;
 

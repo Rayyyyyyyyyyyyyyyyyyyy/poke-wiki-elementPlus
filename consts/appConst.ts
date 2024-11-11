@@ -20,8 +20,6 @@ export enum ETypeContext {
   "物理" = "physics",
   "特殊" = "special",
   "变化" = "status",
-  "極巨招式" = "max",
-  "超極巨招式" = "G-max",
 }
 export enum ETypeColor {
   base = "#9FA19F",
@@ -42,11 +40,9 @@ export enum ETypeColor {
   dragon = "#5060E1",
   dark = "#50413F",
   fairy = "#EF70EF",
-  physics = "#3D7DCA",
-  special = "#3D7DCA",
-  status = "#3D7DCA",
-  max = "#003A70",
-  "G-max" = "#003A70",
+  physics = "#FF4400",
+  special = "#2266CC",
+  status = "#999999",
 }
 export enum ETypeColorHover {
   base = "#888B88",
@@ -67,11 +63,9 @@ export enum ETypeColorHover {
   dark = "#413533",
   steel = "#509094",
   fairy = "#D65BD6",
-  physics = "#3567A3",
-  special = "#3567A3",
-  status = "#3567A3",
-  max = "#002C5D",
-  "G-max" = "#002C5D",
+  physics = "#FF6633",
+  special = "#4488EE",
+  status = "#B3B3B3",
 }
 export enum ETypeColorActive {
   base = "#6B6F6C",
@@ -92,11 +86,9 @@ export enum ETypeColorActive {
   dark = "#2A1F1D",
   steel = "#346060",
   fairy = "#B54BB4",
-  physics = "#2A5C8A",
-  special = "#2A5C8A",
-  status = "#2A5C8A",
-  max = "#001E47",
-  "G-max" = "#001E47",
+  physics = "#CC3700",
+  special = "#1A4C99",
+  status = "#7A7A7A",
 }
 
 export const areaNameList = [
@@ -144,11 +136,10 @@ export const typeList = [
   "恶",
   "妖精",
 ];
-export const moveType = ["物理", "特殊", "变化", "極巨招式", "超極巨招式"];
+export const moveType = ["物理", "特殊", "变化"];
 
 export enum EPageName {
   "/pokemon/IllustratedBook" = "全國圖鑑",
   "/pokemon/MoveBook" = "招式列表",
-  "/pokemon/AbilityList" = "特性列表",
   "/pokemon/AreaList" = "地點列表",
 }

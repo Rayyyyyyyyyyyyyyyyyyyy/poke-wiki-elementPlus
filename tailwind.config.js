@@ -29,6 +29,7 @@ export default {
           DEFAULT: "#262626",
           light: "#C8C8C8",
           dark: "#333333",
+          link: "#2980EF",
         },
       },
     },

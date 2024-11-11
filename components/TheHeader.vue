@@ -19,7 +19,6 @@ const goPageOnIndex = (name: string) => {
           v-for="(pathName, inx) in [
             'header/IllustratedBook',
             'header/MoveBook',
-            'header/AbilityList',
             'header/AreaList',
           ]"
         >

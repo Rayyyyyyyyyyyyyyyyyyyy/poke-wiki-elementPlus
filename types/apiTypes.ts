@@ -9,6 +9,10 @@ export type TOption = {
   label: string;
   value: number;
 };
+export type TOptionStrValue = {
+  label: string;
+  value: string;
+};
 
 export type TPokeItem = {
   index: number;
@@ -114,4 +118,30 @@ export type TStateType = {
   cnName: string;
   hoverColor: string;
   activeColor: string;
+};
+
+export type TMoveTableList = {
+  label: string;
+  tableData: TPokeMove[];
+};
+
+export type TMoveDetailInner = {
+  desc: string;
+  imgUrl: string;
+  notes: string;
+  scope: string;
+  effect: string;
+};
+export type TMoveDetail = {
+  id: number;
+  nameZh: string;
+  nameJa: string;
+  nameEn: string;
+  type: string;
+  category: string;
+  power: string;
+  accuracy: string;
+  pp: string;
+  generation: number;
+  detail: TMoveDetailInner;
 };

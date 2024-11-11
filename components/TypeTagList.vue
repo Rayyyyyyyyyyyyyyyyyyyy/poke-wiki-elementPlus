@@ -125,7 +125,7 @@ const onResetClick = () => {
 
 <style scoped lang="scss">
 .tag-box {
-  @apply mx-auto my-4 p-4;
+  @apply mx-auto my-4 p-4 w-11/12;
   @apply border border-secondary rounded-2xl;
 
   .tag-title {

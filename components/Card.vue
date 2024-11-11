@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { TPokeItem } from "~/types/apiTypes";
 import AppUtils from "~/utils/AppUtils";
-import { PokeStore } from "~/stores/pokeStore";
 import { ETypeColor, ETypeContext } from "~/consts/appConst";
 import appUtils from "~/utils/AppUtils";
 
@@ -11,7 +10,6 @@ const props = defineProps({
     default: {},
   },
 });
-const pokeStore = PokeStore();
 const pokeFile = computed(() => {
   if (props.poke_file) {
     return AppUtils.deepCloneData(props.poke_file) as TPokeItem;
