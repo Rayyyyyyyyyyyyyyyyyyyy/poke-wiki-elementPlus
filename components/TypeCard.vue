@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {  TPokeMove } from "~/types/apiTypes";
+import type { TPokeMove } from "~/types/apiTypes";
 import appUtils from "~/utils/AppUtils";
 
 const props = defineProps({
