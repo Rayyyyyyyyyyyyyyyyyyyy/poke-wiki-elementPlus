@@ -22,8 +22,11 @@ const { color, enName } = appUtils.transactionNameToColor(moveTypeZh);
 const pokeStore = PokeStore();
 
 const openMoveDetail = (move: TPokeMove) => {
-  pokeStore.openMoveDetailDialog(move.nameZh);
-  pokeStore.setWantShowMoveId(move.id.toString().padStart(3, "0"));
+  pokeStore.openMoveDetailDialog(move.nameZh, move.id);
+};
+const router = useRouter();
+const goMoveListToType = () => {
+  router.push("/pokemon/MoveBook");
 };
 </script>
 
@@ -40,6 +43,7 @@ const openMoveDetail = (move: TPokeMove) => {
       </p>
     </div>
     <TagComponent
+      @click="goMoveListToType"
       class="type-tag-prop"
       :en_name="enName"
       :zh_name="moveTypeZh"

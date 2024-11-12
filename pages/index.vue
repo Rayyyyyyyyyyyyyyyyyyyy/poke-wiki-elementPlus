@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { areaNameList } from "~/consts/appConst";
 import { useRouter } from "#app";
-import { getPokeV2 } from "~/servies/pokeApi_V2";
 
 const pokeStore = PokeStore();
 
@@ -11,9 +10,6 @@ if (process.client) {
     pokeStore.getPokemonList();
   });
 }
-
-const resV2 = await getPokeV2("pokemon/26", {});
-console.log("resV2", resV2);
 
 const router = useRouter();
 const goIllustratedList = () => {

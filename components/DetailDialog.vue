@@ -10,6 +10,7 @@ import type {
   TPokeDetail,
 } from "~/types/apiTypes";
 import type { TResponse } from "~/types/apiTypes";
+import { proxyImg } from "~/servies/proxyImg";
 
 type TDetail = {
   weight: string;
@@ -54,6 +55,7 @@ const state = reactive({
   baseStat: [] as TOption[],
   type1Color: "",
   moveDoc: [] as TOptionStrValue[],
+  gifUrl: "",
 });
 const getPokeDetail = async () => {
   return (await getPokeApi("pokemon/detail", {
@@ -174,6 +176,11 @@ const setBaseStat = () => {
     },
   ];
 };
+const fetchImage = async () => {
+  const res = await proxyImg(`AniMove${pokeStore.moveId}.gif`);
+  state.gifUrl = URL.createObjectURL(res);
+};
+
 watch(
   () => props.dialog_visible,
   async () => {
@@ -193,16 +200,20 @@ watch(
           state.pokeData = {} as TPokeDetail;
           state.moveData = res.data[0];
           setMoveDetail();
+          fetchImage();
         });
       }
     } else {
       pokeStore.updateDetailDialogVisible(false);
       pokeStore.setWantShowPokeId(-1);
       pokeStore.setDetailType("");
+      pokeStore.setWantShowMoveId("");
+      pokeStore.setWantShowMoveName("");
       state.pokeData = {} as TPokeDetail;
       state.moveData = {} as TMoveDetail;
       state.moveColor = "";
       state.type1Color = "";
+      state.gifUrl = "";
       state.contentDetail = {} as TDetail;
       state.baseStat = [];
     }
@@ -246,8 +257,10 @@ watch(
             />
           </div>
         </div>
-        <div class="move-gif" v-if="!dataTypeIsPoke">
-          <img :src="AppUtils.getMoveGif(pokeStore.moveId)" alt="" />
+        <div class="move-gif" v-if="!dataTypeIsPoke && dialog_visible">
+          <div class="img-box" v-loading="state.gifUrl == ''">
+            <img :src="state.gifUrl" alt="" />
+          </div>
         </div>
       </div>
     </template>
@@ -384,9 +397,13 @@ watch(
       @apply flex justify-center items-start;
       @apply w-full h-full relative;
 
-      img {
+      .img-box {
         @apply absolute bottom-10;
         @apply w-72 h-[214px];
+
+        img {
+          @apply w-full h-full;
+        }
       }
     }
   }

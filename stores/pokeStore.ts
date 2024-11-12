@@ -61,9 +61,7 @@ export const PokeStore = defineStore("pokeStore", {
     setWantShowPokeId(id: number) {
       this.pokeId = id;
     },
-    setWantShowMoveId(id: string) {
-      this.moveId = id;
-    },
+
     setWantShowMoveName(name: string) {
       this.moveName = name;
     },
@@ -75,10 +73,15 @@ export const PokeStore = defineStore("pokeStore", {
       this.setWantShowPokeId(id);
       this.setDetailType("poke");
     },
-    openMoveDetailDialog(MoveName: string) {
+    openMoveDetailDialog(MoveName: string, moveNumId: number) {
+      const moveID = moveNumId.toString().padStart(3, "0");
       this.updateDetailDialogVisible(true);
       this.setWantShowMoveName(MoveName);
       this.setDetailType("move");
+      this.setWantShowMoveId(moveID);
+    },
+    setWantShowMoveId(id: string) {
+      this.moveId = id;
     },
     setTypeCheckList(typeList: TStateType[]) {
       this.stateTypeList = typeList;

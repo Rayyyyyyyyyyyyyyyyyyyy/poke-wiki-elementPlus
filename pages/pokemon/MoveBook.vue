@@ -86,8 +86,7 @@ const setTagColor = (cnType: string) => {
   return ETypeColor[enType];
 };
 const openMoveDetail = async (rowData: TPokeMove) => {
-  pokeStore.openMoveDetailDialog(rowData.nameZh);
-  pokeStore.setWantShowMoveId(rowData.id.toString().padStart(3, "0"));
+  pokeStore.openMoveDetailDialog(rowData.nameZh, rowData.id);
 };
 </script>
 
@@ -101,7 +100,7 @@ const openMoveDetail = async (rowData: TPokeMove) => {
         v-for="table in state.typeMoveTableList"
         :key="table.label"
       >
-        <div class="title">{{ table.label }}</div>
+        <div class="title" :id="`table-${table.label}`">{{ table.label }}</div>
         <el-table
           :data="table.tableData"
           class="move-table"

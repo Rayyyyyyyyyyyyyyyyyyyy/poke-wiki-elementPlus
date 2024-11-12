@@ -4,6 +4,11 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ["assets/scss/tailwind.scss"],
   modules: ["@nuxtjs/tailwindcss", "@element-plus/nuxt", "@pinia/nuxt"],
+  nitro: {
+    routeRules: {
+      "/api/proxyImg/**": { cors: true }, // 啟用 CORS 支持
+    },
+  },
   tailwindcss: {
     // Options
   },
@@ -18,6 +23,7 @@ export default defineNuxtConfig({
       baseURL:
         process.env.BASE_URL || "https://pokemon.fantasticmao.cn/pokemon/",
       baseURL_V2: process.env.BASE_URL_V2 || "https://pokeapi.co/api/v2/",
+      gifUrl: process.env.GIF_URL || "https://s1.52poke.wiki/assets/animoves/",
     },
   },
 });
