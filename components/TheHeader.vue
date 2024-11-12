@@ -4,12 +4,15 @@ const goPageOnIndex = (name: string) => {
   const fileName = name.replace("header", "/pokemon");
   router.push(fileName);
 };
+const goHome = () => {
+  router.push("/");
+};
 </script>
 
 <template>
   <div class="header background">
     <div class="header-main">
-      <div class="logo-box">
+      <div class="logo-box" @click="goHome">
         <ImageComponent url-path="header/logo" />
       </div>
 

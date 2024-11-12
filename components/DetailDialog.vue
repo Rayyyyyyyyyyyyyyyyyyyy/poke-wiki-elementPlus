@@ -55,7 +55,6 @@ const state = reactive({
   baseStat: [] as TOption[],
   type1Color: "",
   moveDoc: [] as TOptionStrValue[],
-  gifUrl: "",
 });
 const getPokeDetail = async () => {
   return (await getPokeApi("pokemon/detail", {
@@ -176,10 +175,6 @@ const setBaseStat = () => {
     },
   ];
 };
-const fetchImage = async () => {
-  const res = await proxyImg(`AniMove${pokeStore.moveId}.gif`);
-  state.gifUrl = URL.createObjectURL(res);
-};
 
 watch(
   () => props.dialog_visible,
@@ -200,7 +195,6 @@ watch(
           state.pokeData = {} as TPokeDetail;
           state.moveData = res.data[0];
           setMoveDetail();
-          fetchImage();
         });
       }
     } else {
@@ -213,7 +207,6 @@ watch(
       state.moveData = {} as TMoveDetail;
       state.moveColor = "";
       state.type1Color = "";
-      state.gifUrl = "";
       state.contentDetail = {} as TDetail;
       state.baseStat = [];
     }
@@ -258,8 +251,11 @@ watch(
           </div>
         </div>
         <div class="move-gif" v-if="!dataTypeIsPoke && dialog_visible">
-          <div class="img-box" v-loading="state.gifUrl == ''">
-            <img :src="state.gifUrl" alt="" />
+          <div class="img-box">
+            <img
+              :src="`/api/proxyImg/AniMove${pokeStore.moveId}.gif`"
+              alt="Pokemon Image"
+            />
           </div>
         </div>
       </div>
