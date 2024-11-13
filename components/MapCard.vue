@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { EAreaName } from "~/consts/appConst";
+import { useRouter } from "#app";
 
 const props = defineProps({
   area_name: {
@@ -9,10 +10,16 @@ const props = defineProps({
 });
 const areaZhName = AppUtils.deepCloneData(props.area_name) as string;
 const areaEnName = EAreaName[areaZhName as keyof typeof EAreaName];
+
+const router = useRouter();
+
+const goAreaList = () => {
+  router.push("/pokemon/AreaList");
+};
 </script>
 
 <template>
-  <el-card class="area-card" shadow="hover">
+  <el-card class="area-card" shadow="hover" @click="goAreaList">
     <NuxtImg class="area-map" :src="`/images/map/${areaEnName}.webp`" alt="" />
     <p class="map-name">{{ area_name }}</p>
   </el-card>

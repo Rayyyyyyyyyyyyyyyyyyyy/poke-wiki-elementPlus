@@ -65,7 +65,6 @@ const goAreaList = () => {
               v-for="(name, ind) in areaNameList"
               :key="ind"
               :area_name="name"
-              @click="goAreaList"
             />
           </div>
         </ContainerItem>
