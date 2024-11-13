@@ -1,0 +1,11 @@
+
+.search-input-popper {
+  .el-vl__wrapper {
+    .el-select-dropdown__item.is-hovering {
+      @apply bg-secondary-light text-white;
+    }
+    .el-select-dropdown__item.is-selected {
+      @apply bg-primary text-white;
+    }
+  }
+}

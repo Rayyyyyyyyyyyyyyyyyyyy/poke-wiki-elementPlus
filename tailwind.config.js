@@ -16,6 +16,7 @@ export default {
         },
         secondary: {
           DEFAULT: "#4A6DBF",
+          light: "#81B9EF",
         },
         bg: {
           DEFAULT: "#666666",
@@ -23,6 +24,7 @@ export default {
           map: "#3D7DCA80",
           card: "#FFCB0580",
           progress: "#ebeef5",
+          areaBg: "#E0F0FF",
         },
 
         text: {

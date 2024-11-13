@@ -18,3 +18,30 @@
     @apply border-b-0 #{!important};
   }
 }
+
+.area-table {
+
+  .el-table__inner-wrapper {
+    @apply rounded-t-lg overflow-hidden;
+  }
+
+  .move-table-row {
+
+    td:nth-child(n) {
+      &:not(:first-child) {
+        .cell {
+          @apply border-l-2 border-bg-areaBg;
+        }
+      }
+      &:first-child {
+        .cell {
+          @apply border-r-0 ;
+        }
+      }
+    }
+  }
+  .move-table-cell {
+    @apply border-b-2 border-bg-areaBg  #{!important};
+
+  }
+}
