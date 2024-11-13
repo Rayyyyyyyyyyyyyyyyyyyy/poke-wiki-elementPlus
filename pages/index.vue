@@ -18,6 +18,9 @@ const goIllustratedList = () => {
 const goMoveBook = () => {
   router.push("/pokemon/MoveBook");
 };
+const goAreaList = () => {
+  router.push("/pokemon/AreaList");
+};
 </script>
 
 <template>
@@ -55,13 +58,14 @@ const goMoveBook = () => {
         </ContainerItem>
       </div>
       <div class="container-col">
-        <ContainerItem item_title="地點列表">
+        <ContainerItem item_title="地點列表" @arrowClickEmit="goAreaList">
           <div class="map-card-list">
             <MapCard
               class="poke-map-prop"
               v-for="(name, ind) in areaNameList"
               :key="ind"
               :area_name="name"
+              @click="goAreaList"
             />
           </div>
         </ContainerItem>
