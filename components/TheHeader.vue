@@ -38,7 +38,7 @@ const goHome = () => {
 
 <style scoped lang="scss">
 .background {
-  background-image: url("assets/images/header/header_bg.png");
+  background-image: url("/images/header/header_bg.png");
   @apply bg-cover;
 }
 
