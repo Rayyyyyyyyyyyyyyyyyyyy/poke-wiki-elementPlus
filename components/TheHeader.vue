@@ -38,7 +38,7 @@ const goHome = () => {
 
 <style scoped lang="scss">
 .background {
-  background-image: url("/images/header/header_bg.png");
+  background-image: url("public/images/header/header_bg.png");
   @apply bg-cover;
 }
 
@@ -46,7 +46,7 @@ const goHome = () => {
 @media only screen and (min-resolution: 192dpi),
   /* 支持dppx */ only screen and (-webkit-min-device-pixel-ratio: 2) {
   .background {
-    background-image: url("assets/images/header/header_bg@2x.png");
+    background-image: url("public/images/header/header_bg@2x.png");
   }
 }
 
@@ -54,7 +54,7 @@ const goHome = () => {
 @media only screen and (min-resolution: 288dpi),
   /* 支持dppx */ only screen and (-webkit-min-device-pixel-ratio: 3) {
   .background {
-    background-image: url("assets/images/header/header_bg@3x.png");
+    background-image: url("public/images/header/header_bg@3x.png");
   }
 }
 
