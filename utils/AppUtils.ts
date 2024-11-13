@@ -25,8 +25,5 @@ const AppUtils = {
   getPokeAvatarGif(id: number) {
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${id}.gif`;
   },
-  getMoveGif(id: string) {
-    return `https://s1.52poke.wiki/assets/animoves/AniMove${id}.gif`;
-  },
 };
 export default AppUtils;

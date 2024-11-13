@@ -3,13 +3,23 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: false },
   css: ["assets/scss/tailwind.scss"],
-  modules: ["@nuxtjs/tailwindcss", "@element-plus/nuxt", "@pinia/nuxt"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@element-plus/nuxt",
+    "@pinia/nuxt",
+    "@nuxt/image",
+  ],
   nitro: {
     routeRules: {
       "/api/proxyImg/**": { cors: true }, // 啟用 CORS 支持
     },
   },
   tailwindcss: {
+    // Options
+  },
+  image: {
+    domains: ["http://localhost:3000"],
+    densities: [1, 2, 3],
     // Options
   },
   typescript: {

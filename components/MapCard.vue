@@ -13,11 +13,7 @@ const areaEnName = EAreaName[areaZhName as keyof typeof EAreaName];
 
 <template>
   <el-card class="area-card" shadow="hover">
-    <img
-      class="area-map"
-      :src="`/_nuxt/assets/images/map/${areaEnName}.webp`"
-      alt=""
-    />
+    <NuxtImg class="area-map" :src="`/images/map/${areaEnName}.webp`" alt="" />
     <p class="map-name">{{ area_name }}</p>
   </el-card>
 </template>

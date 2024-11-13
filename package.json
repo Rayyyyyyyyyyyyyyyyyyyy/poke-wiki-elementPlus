@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@element-plus/nuxt": "^1.0.10",
+    "@nuxt/image": "^1.8.1",
     "@pinia/nuxt": "^0.7.0",
     "element-plus": "^2.8.6",
     "nuxt": "^3.13.2",
