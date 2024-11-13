@@ -8,7 +8,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <NuxtImg :src="`/images/${urlPath}.png`" />
+  <NuxtImg :src="`/images/${urlPath}.png`" alt="" />
 </template>
 
 <style scoped></style>

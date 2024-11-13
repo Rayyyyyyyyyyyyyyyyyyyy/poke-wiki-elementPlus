@@ -24,7 +24,6 @@ export const PokeStore = defineStore("pokeStore", {
       const nameList = state.stateTypeList
         .filter((item) => item.checked)
         .map((item) => item.cnName);
-      state.resetTypeCheck = nameList.length == 0;
       return nameList;
     },
   },
@@ -85,6 +84,9 @@ export const PokeStore = defineStore("pokeStore", {
     },
     setTypeCheckList(typeList: TStateType[]) {
       this.stateTypeList = typeList;
+    },
+    resetTypeClick(visible: boolean) {
+      this.resetTypeCheck = visible;
     },
   },
 });

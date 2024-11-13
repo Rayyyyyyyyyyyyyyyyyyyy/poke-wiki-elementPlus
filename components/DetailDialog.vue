@@ -10,7 +10,6 @@ import type {
   TPokeDetail,
 } from "~/types/apiTypes";
 import type { TResponse } from "~/types/apiTypes";
-import { proxyImg } from "~/servies/proxyImg";
 
 type TDetail = {
   weight: string;
@@ -205,10 +204,12 @@ watch(
       pokeStore.setWantShowMoveName("");
       state.pokeData = {} as TPokeDetail;
       state.moveData = {} as TMoveDetail;
+      state.moveDoc = [] as TOptionStrValue[];
       state.moveColor = "";
       state.type1Color = "";
       state.contentDetail = {} as TDetail;
       state.baseStat = [];
+      state.tagNameList = [];
     }
   },
 );

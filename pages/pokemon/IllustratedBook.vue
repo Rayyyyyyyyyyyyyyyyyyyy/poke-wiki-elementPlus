@@ -36,10 +36,6 @@ const loadMorePoke = (fromScroll: boolean = true) => {
     );
     state.pokeList.push(...loadList);
   } else {
-    if (pokeStore.resetTypeCheck) {
-      state.pokeList = [];
-    }
-
     const loadList = fullList.slice(
       state.pokeList.length,
       state.pokeList.length + singleCount,
@@ -52,6 +48,17 @@ watch(
   () => pokeStore.checkTypeList,
   () => {
     loadMorePoke(false);
+  },
+);
+watch(
+  () => pokeStore.resetTypeCheck,
+  () => {
+    state.pokeList = [];
+
+    loadMorePoke(false);
+    setTimeout(() => {
+      pokeStore.resetTypeClick(false);
+    }, 3000);
   },
 );
 </script>

@@ -75,6 +75,7 @@ const onResetClick = () => {
   ) as TStateType[];
   cloneList.forEach((item) => (item.checked = false));
   pokeStore.setTypeCheckList(cloneList);
+  pokeStore.resetTypeClick(true);
 };
 </script>
 
