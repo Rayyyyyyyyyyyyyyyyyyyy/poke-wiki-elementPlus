@@ -40,14 +40,7 @@ const dataTypeIsPoke = computed(() => pokeStore.dataType == "poke");
 const state = reactive({
   moveColor: "",
   titleName: "",
-  tagNameList: [
-    {
-      zhName: "",
-      enName: "",
-      color: "",
-      needIcon: true,
-    },
-  ] as TTagItem[],
+  tagNameList: [] as TTagItem[],
   pokeData: {} as TPokeDetail,
   moveData: {} as TMoveDetail,
   contentDetail: {} as TDetail,
@@ -207,6 +200,7 @@ watch(
       state.moveDoc = [] as TOptionStrValue[];
       state.moveColor = "";
       state.type1Color = "";
+      state.titleName = "";
       state.contentDetail = {} as TDetail;
       state.baseStat = [];
       state.tagNameList = [];
