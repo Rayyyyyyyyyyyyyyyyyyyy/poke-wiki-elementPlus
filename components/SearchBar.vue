@@ -104,10 +104,15 @@ const gotSelectPoke = (strId: string) => {
       @apply ml-1;
     }
   }
+  .go-back {
+    @apply hidden;
+    @apply sm:block;
+  }
 }
 
 .search-input {
-  @apply w-5/12 h-12;
+  @apply h-12 w-full;
+  @apply sm:w-5/12;
 
   ::v-deep() {
     .el-select__wrapper {

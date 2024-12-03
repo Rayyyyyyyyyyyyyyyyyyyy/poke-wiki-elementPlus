@@ -31,7 +31,7 @@ const goAreaList = () => {
           item_title="全國圖鑑"
           @arrowClickEmit="goIllustratedList"
         >
-          <div class="card-list">
+          <div class="card-list" v-if="pokeStore.fullPokeList.length > 0">
             <Card
               class="poke-card-prop"
               v-for="(item, inde) in pokeStore.fullPokeList.slice(0, 9)"
@@ -78,8 +78,9 @@ const goAreaList = () => {
   @apply mt-4;
 
   .card-list {
-    @apply grid grid-rows-1 grid-cols-1 gap-6;
-    @apply sm:grid-cols-2 md:grid-cols-3 base:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-6 3xl:grid-cols-9;
+    @apply hidden gap-6;
+    @apply sm:grid sm:grid-rows-1 sm:grid-cols-2;
+    @apply md:grid-cols-3 base:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-6 3xl:grid-cols-9;
 
     .poke-card-prop {
       @apply hidden;
@@ -115,20 +116,26 @@ const goAreaList = () => {
   }
 
   .container-row {
-    @apply grid grid-rows-2 grid-cols-1 gap-6;
+    @apply grid grid-rows-2 grid-cols-1;
     @apply lg:grid-rows-1;
     @apply lg:grid-cols-2;
+    @apply lg:gap-6;
   }
 
   .type-card-list {
-    @apply grid grid-rows-1 grid-cols-1 gap-6;
-    @apply xxs:grid-cols-2  md:grid-cols-4 base:grid-cols-5 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5;
+    @apply hidden gap-6;
+
+    @apply sm:grid;
+    @apply sm:grid-rows-1;
+    @apply sm:grid-cols-3;
+
+    @apply md:grid-cols-4 base:grid-cols-5 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5;
 
     .poke-move-prop {
       @apply hidden;
 
-      &:nth-child(-n + 2) {
-        @apply xxs:block;
+      &:nth-child(-n + 3) {
+        @apply sm:block;
       }
 
       &:nth-child(-n + 4) {
@@ -153,14 +160,19 @@ const goAreaList = () => {
   }
 
   .map-card-list {
-    @apply grid grid-rows-1 grid-cols-3 gap-6;
-    @apply xxs:grid-cols-2  md:grid-cols-4 base:grid-cols-5 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5;
+    @apply hidden gap-6;
+
+    @apply sm:grid;
+    @apply sm:grid-rows-1;
+    @apply sm:grid-cols-3;
+
+    @apply md:grid-cols-4 base:grid-cols-5 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5;
 
     .poke-map-prop {
       @apply hidden;
 
-      &:nth-child(-n + 2) {
-        @apply xxs:block;
+      &:nth-child(-n + 3) {
+        @apply sm:block;
       }
 
       &:nth-child(-n + 4) {

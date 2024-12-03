@@ -9,3 +9,9 @@
     }
   }
 }
+
+.menu-drop {
+.el-dropdown-menu__item {
+  @apply text-lg;
+}
+}

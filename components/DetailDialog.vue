@@ -47,6 +47,7 @@ const state = reactive({
   baseStat: [] as TOption[],
   type1Color: "",
   moveDoc: [] as TOptionStrValue[],
+  imgLoading: true,
 });
 const getPokeDetail = async () => {
   return (await getPokeApi("pokemon/detail", {
@@ -189,6 +190,9 @@ watch(
           setMoveDetail();
         });
       }
+      setTimeout(() => {
+        state.imgLoading = false;
+      }, 1500);
     } else {
       pokeStore.updateDetailDialogVisible(false);
       pokeStore.setWantShowPokeId(-1);
@@ -204,6 +208,7 @@ watch(
       state.contentDetail = {} as TDetail;
       state.baseStat = [];
       state.tagNameList = [];
+      state.imgLoading = true;
     }
   },
 );
@@ -226,33 +231,41 @@ watch(
         </div>
 
         <ImageComponent class="header-ball" url-path="detail/pokeball" />
-        <div class="poke-avatar" v-if="dataTypeIsPoke">
-          <img
-            class="poke-img"
-            :src="AppUtils.getPokeAvatarShinyUrl(state.pokeData.index)"
-            alt=""
-          />
-          <img
-            class="poke-img"
-            :src="AppUtils.getPokeAvatarUrl(state.pokeData.index)"
-            alt=""
-          />
-          <div class="gif-box">
+
+        <el-skeleton class="skeleton" :loading="state.imgLoading" animated>
+          <template #template>
+            <el-skeleton-item variant="image" class="skeleton-item" />
+          </template>
+        </el-skeleton>
+        <template v-if="!state.imgLoading">
+          <div class="poke-avatar" v-if="dataTypeIsPoke && dialog_visible">
             <img
-              class="poke-gif"
-              :src="AppUtils.getPokeAvatarGif(state.pokeData.index)"
+              class="poke-img"
+              :src="AppUtils.getPokeAvatarShinyUrl(state.pokeData.index)"
               alt=""
             />
-          </div>
-        </div>
-        <div class="move-gif" v-if="!dataTypeIsPoke && dialog_visible">
-          <div class="img-box">
             <img
-              :src="`/api/proxyImg/AniMove${pokeStore.moveId}.gif`"
-              alt="Pokemon Image"
+              class="poke-img"
+              :src="AppUtils.getPokeAvatarUrl(state.pokeData.index)"
+              alt=""
             />
+            <div class="gif-box">
+              <img
+                class="poke-gif"
+                :src="AppUtils.getPokeAvatarGif(state.pokeData.index)"
+                alt=""
+              />
+            </div>
           </div>
-        </div>
+          <div class="move-gif" v-if="!dataTypeIsPoke && dialog_visible">
+            <div class="img-box">
+              <img
+                :src="`/api/proxyImg/AniMove${pokeStore.moveId}.gif`"
+                alt="Pokemon Image"
+              />
+            </div>
+          </div>
+        </template>
       </div>
     </template>
 
@@ -362,6 +375,13 @@ watch(
     @apply relative;
     .header-ball {
       @apply absolute right-32 top-0;
+    }
+
+    .skeleton {
+      @apply flex items-center justify-center;
+      .skeleton-item {
+        @apply w-72 h-72;
+      }
     }
     .poke-name {
       @apply flex;

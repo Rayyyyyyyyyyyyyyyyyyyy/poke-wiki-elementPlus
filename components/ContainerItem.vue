@@ -27,7 +27,7 @@ const emits = defineEmits(["arrowClickEmit"]);
   @apply my-4;
 }
 .title-arrow {
-  @apply mb-8;
+  @apply sm:mb-8;
   .title {
     @apply mr-1;
   }
