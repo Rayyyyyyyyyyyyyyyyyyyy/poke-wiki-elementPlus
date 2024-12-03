@@ -134,16 +134,18 @@ const onResetClick = () => {
   }
 
   .tag-btn {
-    @apply flex;
+    @apply flex flex-wrap justify-center;
 
     .reset-btn {
       @apply bg-primary text-white rounded-lg;
-      @apply h-10 w-[72px] text-xl;
+      @apply h-10 w-[72px] text-xl mt-4;
     }
 
     .tag-list {
       @apply w-11/12 mr-4;
-      @apply grid grid-rows-2 grid-cols-9 gap-3;
+      @apply grid grid-rows-2 grid-cols-2 gap-3;
+      @apply sm:grid-cols-3 md:grid-cols-4 base:grid-cols-5;
+      @apply lg:grid-cols-6 xl:grid-cols-9;
 
       .type-check-tag {
         @apply flex items-center justify-center;
