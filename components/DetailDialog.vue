@@ -217,7 +217,7 @@ watch(
 <template>
   <el-dialog
     :model-value="props.dialog_visible"
-    width="860"
+    width="80%"
     title=""
     :append-to-bodyt="true"
     :destroy-on-close="true"
@@ -345,17 +345,17 @@ watch(
           v-for="(item, ind) in state.baseStat"
           :key="ind"
         >
-          <el-col :span="3">
+          <el-col :span="4">
             <div class="label" :style="{ color: state.type1Color }">
               {{ item.label }}
             </div>
           </el-col>
-          <el-col :span="2">
+          <el-col :span="3">
             <div class="value">
               {{ item.value > 0 ? item.value : "-" }}
             </div>
           </el-col>
-          <el-col :span="19">
+          <el-col :span="17">
             <ProgressComponent
               :prop_value="item.value"
               :bg_color="state.moveColor"
@@ -371,7 +371,8 @@ watch(
 .detail-dialog {
   .detail-header {
     @apply h-80;
-    @apply pt-4 pl-6;
+    @apply pt-4;
+    @apply lg:pl-6;
     @apply relative;
     .header-ball {
       @apply absolute right-32 top-0;
@@ -389,10 +390,19 @@ watch(
       @apply absolute left-6 text-[32px];
     }
     .poke-avatar {
-      @apply flex justify-center items-start;
+      @apply flex justify-center items-center;
+      @apply lg:items-start;
       @apply w-full h-full;
       .poke-img {
-        @apply w-[280px] h-[280px];
+        @apply hidden;
+
+        @apply sm:block;
+        @apply sm:w-[140px];
+        @apply sm:h-[140px];
+        @apply md:w-[220px];
+        @apply md:h-[220px];
+        @apply lg:w-[280px];
+        @apply lg:h-[280px];
       }
       .gif-box {
         @apply w-10 h-full;
@@ -410,7 +420,8 @@ watch(
 
       .img-box {
         @apply absolute bottom-10;
-        @apply w-72 h-[214px];
+        @apply w-4/5 h-[214px];
+        @apply sm:w-72;
 
         img {
           @apply w-full h-full;
@@ -436,7 +447,8 @@ watch(
       @apply font-medium;
     }
     .move-dec {
-      @apply my-6 ml-8;
+      @apply w-full;
+      @apply my-6;
       .move-dec-item + .move-dec-item {
         @apply mt-4;
       }
@@ -451,14 +463,20 @@ watch(
       @apply w-full text-center;
 
       .detail-contain-row {
-        @apply grid grid-rows-1 grid-cols-4;
-        @apply h-16 mt-6;
+        @apply grid;
+        @apply grid-rows-2 grid-cols-2;
+        @apply sm:grid-rows-1;
+        @apply sm:grid-cols-4;
+        @apply mt-6;
 
-        .information + .information {
-          @apply border-l-2;
-        }
         .information {
           @apply text-center;
+          @apply border-b-2;
+          @apply sm:border-b-0;
+          @apply sm:border-l-2;
+          @apply my-4;
+          @apply sm:my-0;
+
           .information-item {
             @apply text-xl mb-2 text-text-dark;
             @apply flex justify-center items-center;

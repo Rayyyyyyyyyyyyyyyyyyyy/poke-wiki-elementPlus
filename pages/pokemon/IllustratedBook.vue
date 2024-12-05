@@ -82,7 +82,13 @@ watch(
 
 <style scoped lang="scss">
 .poke-list {
-  @apply grid auto-rows-auto grid-cols-4 gap-14;
+  @apply grid auto-rows-auto grid-cols-1 gap-14;
   @apply mt-10;
+
+  @apply sm:grid-cols-2;
+  @apply md:grid-cols-3;
+  @apply base:grid-cols-4;
+  @apply lg:grid-cols-5;
+  @apply xl:grid-cols-6;
 }
 </style>
