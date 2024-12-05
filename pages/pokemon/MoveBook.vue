@@ -19,6 +19,7 @@ if (process.client) {
 }
 const state = reactive({
   typeMoveTableList: [] as TMoveTableList[],
+  fullTypeMoveTableList: [] as TMoveTableList[],
 });
 const mapToTableList = (arr: TPokeMove[][], keyList: string[]) => {
   return arr.map((list, ind) => {
@@ -53,12 +54,15 @@ const loadMoreMove = () => {
             gotTypeFilter.includes(item.type),
           );
         });
-        state.typeMoveTableList = filterCategoryList;
+        state.fullTypeMoveTableList = filterCategoryList;
+        loadScrollMove(filterCategoryList);
       } else {
-        state.typeMoveTableList = filterCategoryList;
+        state.fullTypeMoveTableList = filterCategoryList;
+        loadScrollMove(filterCategoryList);
       }
     } else {
-      state.typeMoveTableList = fullTypeList;
+      state.fullTypeMoveTableList = fullTypeList;
+      loadScrollMove(fullTypeList);
     }
   } else {
     const cloneList = AppUtils.deepCloneData(
@@ -66,11 +70,14 @@ const loadMoreMove = () => {
     ) as TPokeMove[][];
     const fullTypeList = mapToTableList(cloneList, typeList);
     if (pokeStore.checkTypeList.length > 0) {
-      state.typeMoveTableList = fullTypeList.filter((item) =>
+      const filterTypeList = fullTypeList.filter((item) =>
         pokeStore.checkTypeList.includes(item.label),
       );
+      state.fullTypeMoveTableList = filterTypeList;
+      loadScrollMove(filterTypeList);
     } else {
-      state.typeMoveTableList = fullTypeList;
+      state.fullTypeMoveTableList = fullTypeList;
+      loadScrollMove(fullTypeList);
     }
   }
 };
@@ -88,13 +95,33 @@ const setTagColor = (cnType: string) => {
 const openMoveDetail = async (rowData: TPokeMove) => {
   pokeStore.openMoveDetailDialog(rowData.nameZh, rowData.id);
 };
+const loadScrollMove = (arr: TMoveTableList[]) => {
+  const singleCount = 2;
+  if (arr) {
+    const loadList = arr.slice(
+      state.typeMoveTableList.length,
+      state.typeMoveTableList.length + singleCount,
+    );
+    state.typeMoveTableList.push(...loadList);
+  } else {
+    const loadList = state.fullTypeMoveTableList.slice(
+      state.typeMoveTableList.length,
+      state.typeMoveTableList.length + singleCount,
+    );
+    state.typeMoveTableList.push(...loadList);
+  }
+};
 </script>
 
 <template>
   <div class="move-wrapper">
     <TypeTagList :show_move_only="true" />
 
-    <div class="table-list">
+    <div
+      class="table-list"
+      v-infinite-scroll="loadScrollMove"
+      :infinite-scroll-immediate="false"
+    >
       <div
         class="table-item"
         v-for="table in state.typeMoveTableList"
